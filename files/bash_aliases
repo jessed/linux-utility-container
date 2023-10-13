@@ -1,0 +1,19 @@
+## All alias entries should be in here.
+alias ls='ls --color=always'
+alias ll='ls -l --color=always'
+alias l1='ls -1 --color=always'
+alias lh='ls -lh --color=always'
+alias la='ls -lA --color=always'
+alias ld='ls -ld --color=always'
+
+
+# Apt/pkg-mgmt aliases
+alias acs='apt-cache search'
+alias acsn='apt-cache search --names-only'
+alias acsh='apt-cache show'
+alias acsp='apt-cache showpkg'
+alias sagi='apt-get install'
+alias sagu='apt-get update'
+alias sagup='apt-get upgrade'
+alias sagr='apt-get remove'
+alias sadu='apt-get dist-upgrade'

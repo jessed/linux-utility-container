@@ -1,0 +1,80 @@
+# ~/.bashrc
+
+# If not running interactively, don't do anything
+[ -z "$PS1" ] && return
+
+test -f /etc/bashrc       && . /etc/bashrc        # system-wide bashrc
+test -f ~/.bash_aliases   && . ~/.bash_aliases    # bash aliases
+test -f ~/.bash_functions && . ~/.bash_functions  # bash utility functions
+
+test -d $HOME/.HISTORY || mkdir $HOME/.HISTORY
+
+export HISTFILE="$HOME/.HISTORY/$(date +%Y-%m).bash_history"
+export HISTCONTROL=ignoredups
+# equivalent to "%H:%M:%S"
+export HISTTIMEFORMAT="%F %T  "
+export HISTFILESIZE=300000
+export HISTSIZE=300000
+export HISTIGNORE="&:ls:[bf]g:exit"
+
+## Environment variables
+export HOSTFILE=/etc/hosts    # should allow for hostname completion
+export EDITOR=vim
+export VISUAL=vim
+export FCEDIT=vim
+export KUBE_EDITOR=vim
+export TERM=xterm
+
+
+# Bash options
+shopt -s checkwinsize # update the values of LINES and COLUMNS.
+shopt -s histappend   # Append to the history file, do not overwite
+shopt -s cmdhist      # save multi-line commands
+shopt -s hostcomplete # attempt to perform hostname completion following a '@' sign
+
+# Update ls colors
+export CLICOLOR
+export CLICOLOR_FORCE
+export LSCOLORS=ExGxfxBxCxDxDxhbHbacad
+
+## custom prompt
+PROMPT_DIRTRIM=4
+TITLE="\[\e]0;\u@\h\a"
+SCRN='\[\ek$(echo -n M${WINDOW})\e\\\]'
+BLINK="\[\e[5m\]"
+CLR="\[\e[0m\]"
+GREEN="\[\e[0;32m\]"
+RED="\[\e[0;31m\]"
+BLUE="\[\e[0;34m\]"
+CYAN="\[\e[0;36m\]"
+PURPLE="\[\e[0;35m\]"
+BROWN="\[\e[0;33m\]"
+LTBLUE="\[\e[1;34m\]"
+LTGREEN="\[\e[1;32m\]"
+LTRED="\[\e[1;31m\]"
+LTCYAN="\[\e[1;36m\]"
+YELLOW="\[\e[1;33m\]"
+WHITE="\[\e[1;37m\]"
+
+#custom prompt
+mk_prompt () {
+  if [ `id -u` -eq '0' ]; then
+    COLOR=${RED}
+    #COLOR=${RED}${BLINK}
+  else
+    COLOR=${GREEN}
+  fi
+
+  # Change prompt if operating in a screen window
+  if [[ -n "$WINDOW" ]]; then
+    PS1="${TITLE}${COLOR}${SCRN}\h:\w >${CLR}"
+  else
+    PS1="${TITLE}${RED}[${CYAN}\A${RED}]${CLR}\n${COLOR}\h:\w >${CLR}"
+  fi
+}
+
+export PROMPT_COMMAND=mk_prompt
+
+# Additional environment settings/variables
+set -o vi
+

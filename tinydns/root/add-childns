@@ -1,0 +1,2 @@
+#!/bin/sh
+exec /usr/sbin/tinydns-edit data data.new add childns ${1+"$@"}
